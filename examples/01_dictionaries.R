@@ -15,13 +15,16 @@ eus.dic.get.description('indic', 'BS-CCI-BAL')
 
 # for a dataset, I want to see the inndic + meaning
 dt = eus.data.load('ei_bsbu_m_r2')
+dt$data$indic.description = eus.dic.get.description('indic', dt$data$indic)
+dt$data$geo.description = eus.dic.get.description('geo', dt$data$geo)
+dt$data$geo.description = gsub('\\s*\\(.*\\)', '', dt$data$geo.description)
 
 # and we can go for a plot with more meaningful titles
 library(ggplot2)
 dt.plot = subset(dt$data,
                    s_adj=='NSA' &
                    geo %in% c('FR', 'DE', 'IT', 'ES', 'UK', 'PT') &
-                   date.year > 2000
+                   date.year > 2010
 )
 
 q = ggplot(dt.plot, aes(x=date, y=value)) +
