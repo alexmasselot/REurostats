@@ -13,6 +13,5 @@ eus.toc.get.description.lineage = function(dataset.name){
       }
     }
   }
-  print(cDescrLineage)
   cDescrLineage
 }
