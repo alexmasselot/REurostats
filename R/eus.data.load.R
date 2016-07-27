@@ -24,7 +24,7 @@ library(lubridate)
   Y01 = '1231'
 )
 
-eus.data.load = function(dataset.name){
+eus.data.load = function(dataset.name, load.description=F){
   filename = system.file("extdata/data", paste(dataset.name,'.tsv.gz', sep=''), package = "REurostats")
 
   dt.head = read.delim(filename, header = F, sep='\t', nrows = 1)
@@ -53,10 +53,17 @@ eus.data.load = function(dataset.name){
   dt.trans$value  = as.numeric(dt.trans$value)
   dt.trans = subset(dt.trans, ! is.na(value))
 
+  if(load.description){
+    for (f in extra.fields){
+      f.descr = paste(f, 'description', sep='.')
+      dt.trans[[f.descr]] =  eus.dic.get.description(f, dt.trans[[f]])
+    }
+  }
+
   list(
     data=dt.trans,
     description=eus.toc.get.description(dataset.name),
     description.lineage=eus.toc.get.description.lineage(dataset.name),
-    extra.fields=strsplit(c0, ',')[[1]]
+    extra.fields=extra.fields
   )
 }
