@@ -20,8 +20,7 @@ library(lubridate)
   Q03 = '0930',
   Q04 = '1231',
   S01 = '0630',
-  S02 = '1231',
-  Y01 = '1231'
+  S02 = '1231'
 )
 
 eus.data.load = function(dataset.name, load.description=F){
@@ -42,9 +41,11 @@ eus.data.load = function(dataset.name, load.description=F){
   #replace the Mxx and co tag name with actual month/day
   .date.tag = substr(dt.trans$period, nchar(dt.trans$period)-2, nchar(dt.trans$period))
   .date.tag = sapply(.date.tag, function(t){.date.tag.conversion[[t]]})
-  .date.str = paste(substr(dt.trans$period, 1, nchar(dt.trans$period)-3),
-                    .date.tag,
-                    sep='')
+  .date.str = ifelse(nchar(dt.trans$period)==5,
+                     paste(dt.trans$period, '1231', sep=''),
+                     paste(substr(dt.trans$period, 1, nchar(dt.trans$period)-3),
+                           .date.tag,
+                           sep=''))
 
   dt.trans$date = as.Date(.date.str, "X%Y%m%d")
   dt.trans$date.month = month(dt.trans$date)
