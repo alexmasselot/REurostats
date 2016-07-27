@@ -4,7 +4,7 @@
 eus.dic.get.description = function(dic.name, key=NULL){
   dic = eus.dic.load(dic.name)
   f = function(k){
-    dic[k,]$description
+    dic[k]
   }
   if(is.null(key)){
     f

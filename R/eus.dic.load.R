@@ -7,9 +7,12 @@ eus.dic.load = function(dic.name){
       stop(paste("no dictionary file found in package for ", dic.name));
     }
     dt = read.delim(filename, sep='\t', header=F)
-    rownames(dt)=dt[,1]
-    colnames(dt)=c('key', 'description')
-    .cache.dic[[dic.name]] = dt
+
+    dt = dt[!is.na(dt[,1]),]
+    descr = as.character(dt[,2])
+    names(descr) = dt[,1]
+
+    .cache.dic[[dic.name]] = descr
   }
   .cache.dic[[dic.name]]
 }
