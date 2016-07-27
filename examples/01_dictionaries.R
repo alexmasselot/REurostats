@@ -25,7 +25,7 @@ dt.plot = subset(dt$data,
 )
 
 q = ggplot(dt.plot, aes(x=date, y=value)) +
-  geom_smooth(aes(colour=geo), lwd=1.5) +
+  geom_smooth(aes(colour=geo.description), lwd=1.5) +
   facet_wrap( "indic.description", scales="free_y") +
   labs(title=paste(dt$description,
                    eus.dic.get.description('s_adj', 'NSA'), sep='\n')
